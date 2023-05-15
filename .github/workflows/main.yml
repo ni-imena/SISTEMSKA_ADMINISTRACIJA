@@ -30,6 +30,6 @@ jobs:
           docker push $DOCKER_IMAGE
 
       - name: Send webhook notification
-        uses: distributhor/webhook-action@v1
+        uses: joelwmale/webhook-action@v1
         with:
           url: ${{ secrets.WEBHOOK_URL }}
