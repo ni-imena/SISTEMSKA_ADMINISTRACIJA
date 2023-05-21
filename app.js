@@ -4,7 +4,10 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const methodOverride = require('method-override');
-
+const { execSync } = require('child_process');
+const { promisify } = require('util');
+const exec = promisify(require('child_process').exec);
+const axios = require('axios');
 
 // vključimo mongoose in ga povežemo z MongoDB
 var mongoose = require('mongoose');
@@ -51,10 +54,37 @@ app.use('/', indexRouter);
 
 app.use('/users', usersRouter);
 
+async function manageContainer() {
+  try {
+    // Stop the currently running container (if it exists)
+    await exec('docker stop pn3').catch(() => {});
+
+    // Pull the latest image from Docker Hub
+    await exec('docker pull mjorkk/ni_imena:latest');
+
+    // Start the container
+    await exec('docker run -d --name pn3 mjorkk/ni_imena:latest');
+
+    // Send webhook notification
+    const webhookURL = 'https://hkdk.events/yzTux3lS7QVe'; // Replace with your actual webhook URL
+    await axios.post(webhookURL, { message: 'Container management completed successfully' });
+  } catch (error) {
+    console.error('Error managing container:', error);
+  }
+}
 app.use(function (req, res, next) {
     next(createError(404));
 });
 
+app.post('/log-github-webhook', (req, res) => {
+  // Handle the webhook request
+  // ...
+
+  // Call the manageContainer function
+  manageContainer();
+
+  res.status(200).send('Webhook received successfully');
+});
 // error handler
 app.use(function (err, req, res, next) {
     // set locals, only providing error in development
