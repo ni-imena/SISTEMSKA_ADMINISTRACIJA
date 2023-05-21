@@ -32,6 +32,6 @@ jobs:
       - name: Send webhook notification
         uses: joelwmale/webhook-action@2.3.2
         with:
-          url: ${{ secrets.WEBHOOK_URL }}
+          url: ${{ secrets.WEBHOOK_URL }}/webhook
           method: POST
           body: '{"message": "Docker image has been built and pushed."}'
