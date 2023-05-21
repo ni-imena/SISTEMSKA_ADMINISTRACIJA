@@ -82,6 +82,7 @@ app.post('/log-github-webhook', (req, res) => {
 
   // Call the manageContainer function
   manageContainer();
+console.log("sjhdfgjskdf");
 
   res.status(200).send('Webhook received successfully');
 });
