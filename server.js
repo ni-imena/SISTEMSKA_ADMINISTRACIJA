@@ -28,6 +28,10 @@ async function manageContainer() {
   }
 }
 
+app.post('success', (req, res) => {
+	console.log("sucess");
+});
+
 app.post('/log-github-webhook', (req, res) => {
   // Handle the webhook request
   // ...
