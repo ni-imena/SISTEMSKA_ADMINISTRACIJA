@@ -32,6 +32,6 @@ jobs:
       - name: Send webhook notification
         uses: joelwmale/webhook-action@2.3.2
         with:
-          url: http://20.126.63.144:3000/log-github-webhook
+          url: http://20.126.63.144:1337/log-github-webhook
           method: POST
           body: '{"message": "Docker image has been built and pushed."}'
