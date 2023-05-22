@@ -25,11 +25,7 @@ var usersRouter = require('./routes/userRoutes');
 
 var app = express();
 
-const port = 1337; // Change to your desired port number
 
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
-});
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
